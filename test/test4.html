@@ -1,0 +1,303 @@
+<html>
+<!DOCTYPE html>
+<head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Multiple Instances of a View in a Controller</title>
+    <!-- link rel="stylesheet" type="text/css" href="http://extjs.cachefly.net/ext-4.0.2a/resources/css/ext-all.css"/ -->
+    <!-- script type="text/javascript" src="http://extjs.cachefly.net/ext-4.0.2a/ext-all-debug.js"></script -->
+    <link rel="stylesheet" type="text/css" href="http://cdn.sencha.io/ext-4.0.7-gpl/resources/css/ext-all.css"/>
+    <script type="text/javascript" src="http://cdn.sencha.io/ext-4.0.7-gpl/ext-all-debug.js"></script>
+    
+    <script type="text/javascript">
+    
+        Ext.onReady(function() {
+            
+            Ext.define('MyApp.store.contactosStore', {
+                extend: 'Ext.data.Store',
+                constructor: function(cfg) {
+                    var me = this;
+                    cfg = cfg || {};
+                    me.callParent([Ext.apply({
+                        autoLoad: true,
+                        fields: ['name', 'email', 'phone'],
+                        data: {
+                            'registros': [
+                                { 'name': 'Lisa',  "email":"lisa@simpsons.com",  "phone":"555-111-1224"  },
+                                { 'name': 'Bart',  "email":"bart@simpsons.com",  "phone":"555-222-1234" },
+                                { 'name': 'Homer', "email":"home@simpsons.com",  "phone":"555-222-1244"  },
+                                { 'name': 'Marge', "email":"marge@simpsons.com", "phone":"555-222-1254"  }
+                            ]
+                        },
+                        proxy: {
+                            type: 'memory',
+                            reader: {
+                                type: 'json',
+                                root: 'registros'
+                            }
+                        }
+                    }, cfg)]);
+                }
+            });
+            
+            /* Esta clase suple a la extensibilidad de cada una de las vistas que generamos en Ext Designer */
+            Ext.define('MyApp.view.iu_WinOriginal', {
+                extend: 'Ext.window.Window',
+
+                height: 234,
+                width: 428,
+                layout: {
+                    type: 'fit'
+                },
+                title: 'Window 0',
+
+                initComponent: function() {
+                    var me = this;
+
+                    Ext.applyIf(me, {
+                        dockedItems: [
+                            {
+                                xtype: 'toolbar',
+                                defaults: {
+                                    scale: 'medium'
+                                },
+                                dock: 'bottom',
+                                items: [
+                                    {
+                                        xtype: 'tbfill'
+                                    },
+                                    {
+                                        xtype: 'button',
+                                        itemId: 'boton1',
+                                        text: 'New Window'
+                                    },
+                                    {
+                                        xtype: 'tbseparator'
+                                    },
+                                    {
+                                        xtype: 'button',
+                                        itemId: 'boton2',
+                                        text: 'Who am I',
+                                        tooltip: 'See the console for result text...'
+                                    },
+                                    {
+                                        xtype: 'tbseparator'
+                                    },
+                                    {
+                                        xtype: 'button',
+                                        itemId: 'boton3',
+                                        text: 'Add New Tab'
+                                    }
+                                ]
+                            }
+                        ],
+                        items: [
+                            {
+                                xtype: 'tabpanel',
+                                border: 0,
+                                activeTab: 0,
+                                items: [
+                                    {
+                                        xtype: 'panel',
+                                        border: 0,
+                                        layout: {
+                                            type: 'fit'
+                                        },
+                                        title: 'Contactos',
+                                        items: [
+                                            {
+                                                xtype: 'gridpanel',
+                                                border: 0,
+                                                itemId: 'gridContactos',
+                                                autoScroll: true,
+                                                viewConfig: {
+
+                                                },
+                                                dockedItems: [
+                                                    {
+                                                        xtype: 'toolbar',
+                                                        dock: 'top',
+                                                        items: [
+                                                            {
+                                                                xtype: 'button',
+                                                                itemId: 'msg1',
+                                                                text: 'Message 1'
+                                                            },
+                                                            {
+                                                                xtype: 'tbfill'
+                                                            },
+                                                            {
+                                                                xtype: 'button',
+                                                                itemId: 'msg2',
+                                                                text: 'Message 2'
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                columns: [
+                                                    {
+                                                        xtype: 'gridcolumn',
+                                                        width: 149,
+                                                        dataIndex: 'name',
+                                                        text: 'Name'
+                                                    },
+                                                    {
+                                                        xtype: 'gridcolumn',
+                                                        dataIndex: 'email',
+                                                        flex: 1,
+                                                        text: 'Email'
+                                                    },
+                                                    {
+                                                        xtype: 'gridcolumn',
+                                                        width: 106,
+                                                        dataIndex: 'phone',
+                                                        text: 'Phone'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    });
+
+                    me.callParent(arguments);
+                }
+            });
+            
+            Ext.define ('MyApp.view.iu_Win' , {
+                
+                extend: 'MyApp.view.iu_WinOriginal' ,
+                alias: 'widget.miXType',
+                
+                initComponent: function() {
+                    var me = this;
+                    me.callParent(arguments);
+                },
+                
+                listeners: {
+                    afterrender: function(comp, opts) {
+                        comp.down('gridpanel[itemId=gridContactos]').reconfigure(Ext.create('MyApp.store.contactosStore'));
+                    } 
+                }
+            });
+            
+            /* Contenido agregado dinamicamente */
+            Ext.define('MyApp.view.iu_Panel', {
+                extend: 'Ext.panel.Panel',
+                alias: 'widget.miPanel',
+                title: 'Panel Interno creado dinamicamente...',
+                items: [{
+                    text: 'Mensaje',
+                    xtype: 'button',
+                    margin: '20 20'
+                }]
+            });
+            
+            /* Solo se cuenta con 1 solo controlador que maneja varias instancias de la misma vista */
+            Ext.define('MyApp.controller.ctrl_PanelControl', {
+                extend: 'Ext.app.Controller' ,
+                
+                contadorVentana: 0,
+                
+                contadorTab: 0,
+                
+                views: ['iu_Win'] ,
+
+                init: function () {
+                    this.control ({
+                        'miXType button[itemId=boton1]': {
+            
+                            click: function (button) {
+                                
+                                this.contadorVentana++;
+                                
+                                var win = new Ext.widget('miXType', {
+                                    id: 'miXType-' + this.contadorVentana,
+                                    title: 'Window ' + this.contadorVentana
+                                });
+                                
+                                win.showAt(button.up('window').getPosition()[0]+50, button.up('window').getPosition()[1]+50);
+                                
+                            }
+                        },
+                        'miXType button[itemId=boton2]': {
+                            click: function (button) {
+                                console.info("XType: %s", button.up('window').getXType());
+                                console.info("Id del XType: %s", button.up('window').getId());
+                            }
+                        },
+                        'miXType button[itemId=boton3]': {
+                            click: function (button) {
+                                this.contadorTab += 1;
+                                
+                                var contenido = Ext.widget('miPanel', {
+                                    id: 'miPanel-' + this.contadorTab,
+                                    title: 'Panel ' + this.contadorTab,
+                                    closable: true
+                                });
+                                
+                                button.up('window').down('tabpanel').add(contenido);
+                            }
+                        },
+                        'miXType button[itemId=msg1]': {
+                            click: function(button) {
+                                Ext.Msg.show({
+                                    title: 'Advice',
+                                    msg: 'Message 1',
+                                    buttons: Ext.Msg.OK,
+                                    icon: Ext.Msg.INFO,
+                                    animateTarget: button.getEl()
+                                });
+                            }
+                        },
+                        'miXType button[itemId=msg2]': {
+                            click: function(button) {
+                                Ext.Msg.show({
+                                    title: 'Advice',
+                                    msg: 'Message 2',
+                                    buttons: Ext.Msg.OK,
+                                    icon: Ext.Msg.INFO,
+                                    animateTarget: button.getEl()
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        
+            Ext.define('MyApp.controller.ctrl_ContenidoDinamico', {
+                extend: 'Ext.app.Controller',
+                views: ['iu_Panel'],
+                init: function () {
+                    this.control ({
+                        'miPanel > button': {
+                            click: function (button) {
+                                alert('Mensaje del Panel: ' + button.up('panel').title);
+                            }
+                        }
+                    });
+                }
+            });
+            
+            /* Entrada de nuestra aplicacion MVC */
+            Ext.application({
+                controllers: ['ctrl_PanelControl', 'ctrl_ContenidoDinamico'],
+                name: 'MyApp',
+                launch: function() {
+                    
+                    var mainWindow = new Ext.create('MyApp.view.iu_Win', { id: 'miXType-0' });
+                    mainWindow.show();
+        
+                }
+            });
+        
+        });
+    
+    </script>
+    
+    
+</head>
+<body></body>
+</html>

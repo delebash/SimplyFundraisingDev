@@ -1,0 +1,146 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>Ext JS in Action Chapter 05 | Listing  5.11 Flexing the  Border Layout</title>
+		<link rel="stylesheet" type="text/css" href="lib/ext4/resources/css/ext-all.css" />
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<script type="text/javascript" src="lib/ext4/ext-all-debug.js"></script>
+	</head>
+	<body>
+
+		<script type="text/javascript">
+            Ext.onReady(function() {
+
+                // var myBtnHandler = function(btn) {
+                // Ext.MessageBox.alert('You Clicked', btn.text);
+                // }, fileBtn = Ext.create('Ext.button.Button', {
+                // text : 'File',
+                // handler : myBtnHandler
+                // }), editBtn = Ext.create('Ext.button.Button', {
+                // text : 'Edit',
+                // handler : myBtnHandler
+                // }), tbFill = new Ext.toolbar.Fill();
+
+    Ext.QuickTips.init();
+                var myTopToolbar = Ext.create('Ext.toolbar.Toolbar', {
+                    xtype : 'toolbar',
+                    items : [{
+                        text : 'File',
+                           tooltip: {text:'This is a an example QuickTip for a toolbar item', title:'Tip Title'},
+                        menu : {
+                            items : [{
+                                text : 'New...',
+                                  menu: {
+                        showSeparator: false,
+                        items: [
+                        {
+                                text : 'test...'
+                            }
+                        ]}
+                            }, {
+                                text : 'Open...'
+                            }]
+                        }
+                    }, {
+                       
+                        text : 'Edit',
+                        menu : {
+                            items : [{
+                                text : 'Copy'
+                            }, {
+                                text : 'Paste'
+                            }]
+                        }
+                    }],
+                    cls : 'toolbar'
+                });
+
+                Ext.create("Ext.Viewport", {
+                    layout : 'border',
+                    padding : '0 2 0 4',
+                    cls : 'viewport',
+                    defaults : {
+                        frame : false
+                    },
+                    items : [{
+                        xtype : 'container',
+                        region : 'north',
+                        cls : 'ctnorth',
+                        items : [{
+                            xtype : 'container',
+                            id : 'header',
+                            html : 'Simply Fundraising',
+                            cls : 'header'
+                        }, {
+                            xtype : 'panel',
+                            id : 'headermenu',
+                            border : false,
+
+                            bbar : myTopToolbar
+                        }]
+                    }, {
+                        xtype : 'container',
+                        region : 'south',
+                        height : 75,
+                        margins : {
+                            top : 5
+                        },
+                        items : {
+                            xtype : 'container',
+                            id : 'footer',
+                            html : 'footer',
+
+                        }
+                    }, {
+                        xtype : 'panel',
+                        region : 'east',
+                        split : true,
+                        width : 100,
+                        minWidth : 75,
+                        maxWidth : 150,
+                        collapsible : true,
+                        items : {
+                            xtype : 'container',
+                            title : 'East Panel',
+                            id : 'eastPanel',
+                            html : ' disposable',
+
+                        }
+                    }, {
+                        xtype : 'panel',
+                        region : 'west',
+                        split : true,
+                        width : 100,
+                        minWidth : 75,
+                        maxWidth : 150,
+                        collapsible : true,
+                        items : {
+                            xtype : 'container',
+                            title : 'West Panel',
+                            id : 'westPanel',
+                            html : 'West disposable',
+
+                        }
+                    }, {
+                        xtype : 'container',
+                        region : 'center',
+                        layout : 'fit',
+                        id : 'centerRegion',
+                        autoEl : {},
+                        cls : 'panelrounded',
+                        items : {
+                            title : 'Center Panel',
+                            id : 'centerPanel',
+                            html : 'I am disposable',
+                            border : false,
+
+                        }
+
+                    }]
+                });
+
+            });
+
+		</script>
+	</body>
+</html>
