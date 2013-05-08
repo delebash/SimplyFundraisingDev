@@ -1,13 +1,9 @@
 
 Ext.define('SimplyFundraising.store.Users', {
     extend : 'Ext.data.Store',
-    model : 'SimplyFundraising.model.User',
+    model : 'User',
     autoLoad : false,
-    autoSync : true,
-    proxy : {
-        entity : 'Users',
-        type : 'sfproxy'
-    }
+    autoSync : true
 });
 
 // Ext.define('SimplyFundraising.store.Users', {

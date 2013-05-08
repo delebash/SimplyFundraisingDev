@@ -1,6 +1,6 @@
 Ext.define('SimplyFundraising.controller.Contacts', {
     extend : 'Ext.app.Controller',
-    models : ['Contact'],
+   // models : ['Contact','User'],
     stores : ['Contacts'],
 
     views : ['contacts.List', 'contacts.Edit'],
@@ -22,13 +22,18 @@ Ext.define('SimplyFundraising.controller.Contacts', {
         });
     },
     list : function() {
-       // var mystore = Ext.StoreMgr.lookup('Contacts');  
+       // var mystore = Ext.StoreMgr.lookup('Contacts');
+     //   var myContact = this.getModel('Contact')
+     //   var User = this.getModel('User');
+
+        debugger;
         var mystore = this.getStore("Contacts");
+        debugger;
           //  mystore.proxy.api.read = users.proxy.api.read + '(17)'
         //mystore.proxy.extraParams = { $expand: 'ContactType'};
         mystore.load();
       //var test = Ext.ModelManager.getModel('Contact');
-     // var User = this.getModel('Contact');
+
       // //var User = this.getContactModel();
       // User.load(258, {
     // success: function(user) {

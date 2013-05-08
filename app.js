@@ -19,7 +19,13 @@
  * After that run "sencha app refresh" to refresh the dependencies on bootstrap.js.
  * Ext.ux.Router will be added over there and you can simply use it.
  */
-
+Ext.Loader.setConfig({
+    enabled	: true,
+    paths	: {
+        'Ext.ux'	: "lib/extux",
+        'Wakanda'	: "lib/extux/wakanda"
+    }
+});
 Ext.application({
     name : 'SimplyFundraising',
     autoCreateViewport : true,
@@ -27,7 +33,7 @@ Ext.application({
     requires : ['Ext.ux.Router', // Require the UX
     'Ext.window.MessageBox'],
 
-    controllers : ['Home', 'Settings', 'Users', 'popusers', 'Contacts'],
+    controllers : ['Contacts'],
 
     /*
      * The default is already true, I'm just making it clear here that we
@@ -42,29 +48,7 @@ Ext.application({
      *  value:  controller + '#' + action to be invoked
      */
     routes : {
-        '/' : 'home#index',
-        'settings' : 'settings#index',
-        'users' : {
-            controller : 'users',
-            action : 'list',
-            view : 'List'
-        },
-        'users/:id/edit' : {
-            controller : 'users',
-            action : 'edit',
-            view : 'Edit'
-        },
-        'users/add' : {
-            controller : 'users',
-            action : 'add',
-            view : 'Edit'
-        },
-        'popusers' : {
-            controller : 'popusers',
-            action : 'list',
-            view : 'List'
-        },
-        'contacts' : {
+        '/' : {
             controller : 'contacts',
             action : 'list',
             view : 'List'

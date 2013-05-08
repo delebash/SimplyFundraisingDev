@@ -4,5 +4,4 @@ Ext.define('SimplyFundraising.store.Contacts', {
     model : 'SimplyFundraising.model.Contact',
     autoLoad : false,
     autoSync : true
-    
 });
