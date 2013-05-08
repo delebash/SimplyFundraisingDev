@@ -1,3 +1,3 @@
 Ext.define('SimplyFundraising.model.User', {
-    extend :  'Ext.data.WakandaModel'
+    extend : 'Wakanda.Model'
 }); 

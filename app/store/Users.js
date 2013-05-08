@@ -1,7 +1,7 @@
 
 Ext.define('SimplyFundraising.store.Users', {
     extend : 'Ext.data.Store',
-    model : 'User',
+    model : 'SimplyFundraising.model.User',
     autoLoad : false,
     autoSync : true
 });
