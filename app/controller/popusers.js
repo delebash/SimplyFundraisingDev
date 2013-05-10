@@ -1,41 +1,41 @@
 Ext.define('SimplyFundraising.controller.popusers', {
-    extend : 'Ext.app.Controller',
-    stores : ['Users'],
-    views : ['popusers.List'],
-    init : function() {
+    extend: 'Ext.app.Controller',
+    stores: ['Users'],
+    views: ['popusers.List'],
+    init: function () {
         this.control({
-            'popuserslist' : {
-                itemdblclick : this.editUser,
-                removeitem : this.removeUser
+            'popuserslist': {
+                itemdblclick: this.editUser,
+                removeitem: this.removeUser
             },
-            'popuserslist > toolbar > button[action=create]' : {
-                click : this.onCreateUser
+            'popuserslist > toolbar > button[action=create]': {
+                click: this.onCreateUser
             },
             // 'popusersadd button[action=save]': {
             // click: this.doCreateUser
             // },
-            'popusersedit button[action=save]' : {
-                click : this.updateUser
+            'popusersedit button[action=save]': {
+                click: this.updateUser
             }
         });
     },
-    list : function() {
+    list: function () {
         var users = Ext.getStore('Users')
         users.load();
     },
-    editUser : function(grid, record) {
+    editUser: function (grid, record) {
         var view = Ext.widget('popusersedit');
         view.down('form').loadRecord(record);
         this.addnew = false
     },
-    removeUser : function(user) {
-        Ext.Msg.confirm('Remove User ' + user.data.name, 'Are you sure?', function(button) {
+    removeUser: function (user) {
+        Ext.Msg.confirm('Remove User ' + user.data.name, 'Are you sure?', function (button) {
             if (button == 'yes') {
                 this.getUsersStore().remove(user);
             }
         }, this);
     },
-    onCreateUser : function() {
+    onCreateUser: function () {
         var view = Ext.widget('popusersedit');
         this.addnew = true
     },
@@ -49,7 +49,7 @@ Ext.define('SimplyFundraising.controller.popusers', {
     // win.close();
     // }
     // },
-    updateUser : function(button) {
+    updateUser: function (button) {
         var win = button.up('window'), form = win.down('form'), record = form.getRecord(), values = form.getValues(), store = this.getUsersStore();
         if (form.getForm().isValid()) {
             if (this.addnew == true) {
