@@ -20,42 +20,43 @@
  * Ext.ux.Router will be added over there and you can simply use it.
  */
 Ext.Loader.setConfig({
-    enabled	: true,
-    paths	: {
-        'Ext.ux'	: "lib/extux",
-        'Wakanda'	: "lib/extux/wakanda"
+    enabled: true,
+    paths: {
+        'Ext.ux': "lib/extux",
+        'Wakanda': "lib/extux/wakanda"
     }
 });
 Ext.application({
-    name : 'SimplyFundraising',
-    autoCreateViewport : true,
+    name: 'SimplyFundraising',
+    autoCreateViewport: true,
 
-    requires : ['Ext.ux.Router', // Require the UX
-    'Ext.window.MessageBox'],
+    requires: ['Ext.ux.Router', // Require the UX
+        'Ext.window.MessageBox',
+        'Wakanda.model'],
 
-    controllers : ['Contacts'],
+    controllers: ['Contacts'],
 
     /*
      * The default is already true, I'm just making it clear here that we
      * have one config called enableRouter that auto-invoke Ext.ux.Router.init();
      * If you need to customize when init() is called, set this to false
      */
-    enableRouter : true,
+    enableRouter: true,
 
     /*
      * Here is where routes are defined.
      *  key:    URL matcher
      *  value:  controller + '#' + action to be invoked
      */
-    routes : {
-        '/' : {
-            controller : 'contacts',
-            action : 'list',
-            view : 'List'
+    routes: {
+        '/': {
+            controller: 'contacts',
+            action: 'list',
+            view: 'List'
         }
     },
 
-    launch : function() {
+    launch: function () {
         Ext.Ajax.cors = true;
         Ext.Ajax.useDefaultXhrHeader = false;
         /*
@@ -64,16 +65,16 @@ Ext.application({
          */
         Ext.ux.Router.on({
 
-            routemissed : function(token) {
+            routemissed: function (token) {
                 Ext.Msg.show({
-                    title : 'Error 404',
-                    msg : 'Route not found: ' + token,
-                    buttons : Ext.Msg.OK,
-                    icon : Ext.Msg.ERROR
+                    title: 'Error 404',
+                    msg: 'Route not found: ' + token,
+                    buttons: Ext.Msg.OK,
+                    icon: Ext.Msg.ERROR
                 });
             },
 
-            beforedispatch : function(token, match, params) {
+            beforedispatch: function (token, match, params) {
                 Ext.log('beforedispatch ' + token);
             },
 
@@ -82,7 +83,7 @@ Ext.application({
              * based on the token. Each route points to a controller and action.
              * Here I'm using these 2 information to get the view and render.
              */
-            dispatch : function(token, match, params, controller) {
+            dispatch: function (token, match, params, controller) {
                 var view, viewClass, action, viewport = Ext.getCmp('viewport'), target = viewport.getComponent('centerRegion')
                 //     target = viewport.down('#viewport-target'),
                 navToolbar = viewport.down('#main-nav-toolbar');
@@ -115,7 +116,7 @@ Ext.application({
                     Ext.suspendLayouts();
                     target.removeAll();
                     target.add({
-                        xtype : myxtype
+                        xtype: myxtype
                     });
                     Ext.resumeLayouts(true);
 

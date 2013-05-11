@@ -1,5 +1,6 @@
 Ext.define('SimplyFundraising.controller.Contacts', {
     extend: 'Ext.app.Controller',
+    stores: ['Contacts'],
     models: ['Contact'],
 
 
@@ -32,20 +33,23 @@ Ext.define('SimplyFundraising.controller.Contacts', {
         //  var myContact = this.getModel('Contact').create()
         //   var bb =  myContact.create()
 
-        // var rr = Ext.create('SimplyFundraising.model.Contact')
-        var mystore = Ext.create('SimplyFundraising.store.Contacts')
-        debugger;
+        //    var rr = Ext.create('SimplyFundraising.model.Contact')
+        //  //= Ext.create('SimplyFundraising.store.Contacts')
+        //   debugger;
         //  mystore.proxy.api.read = users.proxy.api.read + '(17)'
         //mystore.proxy.extraParams = { $expand: 'ContactType'};
-        mystore.load();
+        //
+        //  debugger;
         //var test = Ext.ModelManager.getModel('Contact');
 
-        // //var User = this.getContactModel();
-        // User.load(258, {
-        // success: function(user) {
-        // console.log("Loaded user 258: " + user.get('lastName'));
-        // }
-// });
+        var mystore = this.getStore('Contacts')
+        mystore.load();
+//        var User = this.getContactModel();
+//        User.load(258, {
+//            success: function (user) {
+//                console.log("Loaded user 258: " + user.get('lastName'));
+//            }
+//        });
     },
     editContact: function (grid, record) {
         var view = Ext.widget('contactsedit');
