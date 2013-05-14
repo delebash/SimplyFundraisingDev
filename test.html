@@ -6,15 +6,24 @@
     <link rel="stylesheet" type="text/css" href="css/app.css">
 
     <script type="text/javascript" src="lib/ext4/ext-all-dev.js"></script>
-    <script type="text/javascript" src="lib/extux/wakanda/model.js"></script>
-    <script type="text/javascript" src="lib/extux/wakanda/reader.js"></script>
-    <script type="text/javascript" src="lib/extux/wakanda/writer.js"></script>
-    <script type="text/javascript" src="lib/extux/wakanda/proxy.js"></script>
-    <script type="text/javascript" src="lib/extux/Router.js"></script>
-
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="apptest.js"></script>
 </head>
 <body>
+         <script>
 
+             Ext.onReady(function() {
+                 var mystore = Ext.create('SimplyFundraising.store.Contacts')
+             mystore.proxy.extraParams = { $expand: 'ContactType'};
+             mystore.load({
+                 params: {
+                 },
+                 callback: function(r,options,success) {
+                          debugger;
+                 } //callback
+             }); //store.load
+
+             })
+
+         </script>
 </body>
 </html>

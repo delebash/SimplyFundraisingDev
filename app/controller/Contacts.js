@@ -1,7 +1,5 @@
 Ext.define('SimplyFundraising.controller.Contacts', {
     extend: 'Ext.app.Controller',
-    stores: ['Contacts'],
-    models: ['Contact'],
 
 
     views: ['contacts.List', 'contacts.Edit'],
@@ -23,27 +21,17 @@ Ext.define('SimplyFundraising.controller.Contacts', {
         });
     },
     list: function () {
-        // var mystore = Ext.StoreMgr.lookup('Contacts');
-        //   var myContact = this.getModel('Contact')
-        //   var User = this.getModel('User');
-
-        //debugger;
-        //  var mystore =  Ext.create('SimplyFundraising.store.Contacts')
-
-        //  var myContact = this.getModel('Contact').create()
-        //   var bb =  myContact.create()
-
-        //    var rr = Ext.create('SimplyFundraising.model.Contact')
-        //  //= Ext.create('SimplyFundraising.store.Contacts')
-        //   debugger;
-        //  mystore.proxy.api.read = users.proxy.api.read + '(17)'
-        //mystore.proxy.extraParams = { $expand: 'ContactType'};
-        //
-        //  debugger;
-        //var test = Ext.ModelManager.getModel('Contact');
 
         var mystore = this.getStore('Contacts')
-        mystore.load();
+        mystore.proxy.extraParams = { $expand: 'ContactType'};
+        mystore.load({
+            params: {
+            },
+            callback: function(r,options,success) {
+           //     debugger;
+            } //callback
+        }); //store.load
+// mystore.proxy.extraParams = { $expand: 'ContactType'};
 //        var User = this.getContactModel();
 //        User.load(258, {
 //            success: function (user) {
@@ -52,6 +40,15 @@ Ext.define('SimplyFundraising.controller.Contacts', {
 //        });
     },
     editContact: function (grid, record) {
+        var store = this.getStore('ContactTypes');
+        store.load({
+            params: {
+            },
+            callback: function(r,options,success) {
+        //    debugger;
+            } //callback
+        }); //store.load
+
         var view = Ext.widget('contactsedit');
         view.down('form').loadRecord(record);
         this.addnew = false
@@ -78,13 +75,18 @@ Ext.define('SimplyFundraising.controller.Contacts', {
     // }
     // },
     updateContact: function (button) {
-        var win = button.up('window'), form = win.down('form'), record = form.getRecord(), values = form.getValues(), store = this.getContactsStore();
+        var win = button.up('window'),
+            form = win.down('form'),
+            record = form.getRecord(),
+            values = form.getValues(),
+            store =  this.getStore('Contacts')
         if (form.getForm().isValid()) {
             if (this.addnew == true) {
                 store.add(values);
             } else {
                 record.set(values);
             }
+            store.sync();
             win.close();
         }
     }

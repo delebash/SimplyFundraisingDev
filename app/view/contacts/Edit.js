@@ -3,6 +3,7 @@ Ext.define('SimplyFundraising.view.contacts.Edit', {
     xtype: 'contactsedit',
     title: 'Edit Contacts',
     layout: 'fit',
+    stores: ['ContactTypes','Contacts'],
     autoShow: true,
     initComponent: function () {
         this.items = [
@@ -25,6 +26,18 @@ Ext.define('SimplyFundraising.view.contacts.Edit', {
                         name: 'lastName',
                         allowBlank: false,
                         fieldLabel: 'Last Name'
+                    },
+                    {
+                        xtype: 'combobox',
+                        fieldLabel: 'Contact Type',
+
+                        store: 'ContactTypes',
+
+                        displayField: 'name',
+                        valueField: '__KEY',
+                        typeAhead: true,
+                        queryMode: 'local',
+                        emptyText: 'Select a type...'
                     }
                 ]
             }
