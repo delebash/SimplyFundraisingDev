@@ -7,9 +7,8 @@ Ext.Loader.setConfig({
 });
 Ext.application({
     name: 'SimplyFundraising',
-    autoCreateViewport: true,
 
-    requires: ['Ext.ux.Router', // Require the UX
-        'Ext.window.MessageBox',
-        'Wakanda.model'],
+
+    requires: [
+        'Wakanda.model']
 })

@@ -30,9 +30,8 @@ Ext.define('SimplyFundraising.view.contacts.Edit', {
                     {
                         xtype: 'combobox',
                         fieldLabel: 'Contact Type',
-
                         store: 'ContactTypes',
-
+                         valueNotFoundText: 'not found',
                         displayField: 'name',
                         valueField: '__KEY',
                         typeAhead: true,
@@ -53,6 +52,7 @@ Ext.define('SimplyFundraising.view.contacts.Edit', {
                 handler: this.close
             }
         ];
+
         this.callParent(arguments);
     }
 });

@@ -9,21 +9,63 @@
     <script type="text/javascript" src="apptest.js"></script>
 </head>
 <body>
-         <script>
+<script>
 
-             Ext.onReady(function() {
-                 var mystore = Ext.create('SimplyFundraising.store.Contacts')
-             mystore.proxy.extraParams = { $expand: 'ContactType'};
-             mystore.load({
-                 params: {
-                 },
-                 callback: function(r,options,success) {
-                          debugger;
-                 } //callback
-             }); //store.load
+    Ext.onReady(function () {
+//                 var mystore = Ext.create('SimplyFundraising.store.Contacts')
+//             mystore.proxy.extraParams = { $expand: 'ContactType'};
+//             mystore.load({
+//                 params: {
+//                 },
+//                 callback: function(r,options,success) {
+//                          debugger;
+//                 } //callback
+//             }); //store.load
+//
 
-             })
+        Ext.define('SimplyFundraising.model.ContactType', {
+            extend: 'Wakanda.model',
+            fields: ['name', ]
+        });
 
-         </script>
+        Ext.define('SimplyFundraising.model.Contact', {
+            extend: 'Wakanda.model',
+            fields: ['firstName', 'middleName', 'lastName'],
+            associations: [
+                {
+                    type: 'hasOne',
+                    model: 'SimplyFundraising.model.ContactType',
+                    name: 'ContactType',
+                    associationKey: 'ContactType'
+
+                }
+            ]
+        });
+        var mystore = SimplyFundraising.model.Contact
+        var myproxy = mystore.getProxy()
+
+        //  debugger;
+        myproxy.extraParams = { $expand: 'ContactType'};
+
+
+        mystore.load(289, {
+            scope: this,
+            failure: function (record, operation) {
+                debugger;
+                //do something if the load failed
+            },
+            success: function (record, operation) {
+                debugger;
+                //do something if the load succeeded
+            },
+            callback: function (record, operation) {
+                debugger;
+                //do something whether the load succeeded or failed
+            }
+        });
+
+    })
+
+</script>
 </body>
 </html>

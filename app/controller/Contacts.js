@@ -28,9 +28,10 @@ Ext.define('SimplyFundraising.controller.Contacts', {
             params: {
             },
             callback: function(r,options,success) {
-           //     debugger;
+         //       debugger;
             } //callback
         }); //store.load
+
 // mystore.proxy.extraParams = { $expand: 'ContactType'};
 //        var User = this.getContactModel();
 //        User.load(258, {
@@ -50,7 +51,16 @@ Ext.define('SimplyFundraising.controller.Contacts', {
         }); //store.load
 
         var view = Ext.widget('contactsedit');
-        view.down('form').loadRecord(record);
+        var form =  view.down('form')
+
+        form.loadRecord(record);
+      //  debugger;
+        form.loadRecord(record.getContactType());
+      //  debugger;
+      //  form.loadRecord(records.baseModel());
+        //form.loadRecords(records.getAt(0)); this will load your form with id & name
+       //     form.loadRecords(records.getAt(0).getterName();
+       //form.loadRecord(record);
         this.addnew = false
     },
     removeContact: function (Contact) {
