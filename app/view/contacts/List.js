@@ -31,8 +31,15 @@ Ext.define('SimplyFundraising.view.contacts.List', {
             flex : 1
         },
         {
-            header : 'Type',
-            dataIndex : 'ContactType.name',
+            header : 'Contact Type',
+            renderer: function (val, meta, record) {
+                return record.getContactType().get('name')
+                // record.getContactType().proxy.type = 'memory'
+
+                //  debugger;
+              //
+              // record.getContactType().data.name
+            },
             flex : 1
         }];
         this.addEvents('removeitem');

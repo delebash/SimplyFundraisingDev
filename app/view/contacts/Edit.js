@@ -5,8 +5,22 @@ Ext.define('SimplyFundraising.view.contacts.Edit', {
     layout: 'fit',
     stores: ['ContactTypes','Contacts'],
     autoShow: true,
+//    defaults: {
+//        listeners: {
+//            change: function(field, newVal, oldVal) {
+//                //alert(newVal);
+//                debugger;
+//            }
+//        }
+//    },
+//    listeners: {
+//        dirtychange: function() {
+//            alert('hello');
+//        }
+//    },
     initComponent: function () {
         this.items = [
+
             {
                 xtype: 'form',
                 bodyStyle: {
@@ -34,6 +48,7 @@ Ext.define('SimplyFundraising.view.contacts.Edit', {
                          valueNotFoundText: 'not found',
                         displayField: 'name',
                         valueField: '__KEY',
+                        name: 'ContactType',
                         typeAhead: true,
                         queryMode: 'local',
                         emptyText: 'Select a type...'

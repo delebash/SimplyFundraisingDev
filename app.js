@@ -1,3 +1,7 @@
+var hosturl = ''
+//hosturl = 'http://127.0.0.1:8081/cors/'
+hosturl = 'http://ageektech.zapto.org:8081/cors/'
+
 Ext.Loader.setConfig({
     enabled: true,
     paths: {
@@ -11,7 +15,7 @@ Ext.application({
 
     requires: ['Ext.ux.Router', // Require the UX
         'Ext.window.MessageBox',
-        'Wakanda.model'],
+],
 
     controllers: ['Contacts'],
 

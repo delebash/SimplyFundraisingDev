@@ -3,12 +3,12 @@ Ext.define('SimplyFundraising.model.Contact', {
     requires:[
         'SimplyFundraising.model.ContactType'
     ],
-    fields: ['firstName', 'middleName','lastName','ContactType.name'],
+    fields: ['firstName', 'middleName','lastName'],
     associations: [
         {
             type: 'hasOne',
             model: 'SimplyFundraising.model.ContactType',
-            name: 'ContactTypes',
+            name: 'ContactType',
             getterName: 'getContactType',
             associationKey: 'ContactType'
 
